@@ -3,12 +3,17 @@ package classes;
 import abstractions.AbstractJSObject;
 import abstractions.JSObject;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Objects;
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 
 
 /**
  * @author Nikola
  */
-public class SimpleJSObject extends AbstractJSObject
+public class SimpleJSObject extends AbstractJSObject 
+        implements Iterable<JSObject>
 {
     public SimpleJSObject(Object data)
     {
@@ -95,7 +100,31 @@ public class SimpleJSObject extends AbstractJSObject
         object.put(key, data);
     }
 
+    @Override
+    public Iterator<JSObject> iterator()
+    {
+        if( array != null )
+            return array.iterator();
+        
+        if( object != null )
+            return object.values().iterator();
+        
+        return null;
+    }
+
+    @Override
+    public void forEach(Consumer<? super JSObject> action)
+    {
+        if( array != null )
+            array.forEach(action);
+    }
     
+    
+    public void forEach(BiConsumer<? super String, ? super JSObject> action)
+    {
+        if( object != null )
+            object.forEach(action);
+    }
     
     
 }

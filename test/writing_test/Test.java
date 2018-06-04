@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 import abstractions.JSObject;
 import java.util.Deque;
+import java.util.HashMap;
 
 public class Test
 {
@@ -17,9 +18,15 @@ public class Test
     
     public static void main(String[] args)
     {
-//        Number a = new Test().<Number>convertTo();
-        Object a = new Test().convertTo();
-        System.out.println(a);
+        SimpleJSObject ob = new SimpleJSObject(new String[]{"Pera", "Mika", "Laza"});
+        
+        for( JSObject i : ob )
+            System.out.println( i.get() );
+        
+        ob.set("name", "Nikola");
+         for( JSObject i : ob )
+            System.out.println( i.get() );
+        
     }
     
 } 
