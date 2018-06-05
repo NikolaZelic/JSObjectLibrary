@@ -39,7 +39,7 @@ abstract public class AbstractJSObject implements JSObject
     public String toString()
     {
         if(data!=null)
-            return data.getClass().toString();
+            return data.toString();
         if(array!=null)
             return array.getClass().toString();
         return object.getClass().toString();

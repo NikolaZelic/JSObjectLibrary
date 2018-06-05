@@ -15,12 +15,20 @@ public class SimpleJSObject extends AbstractJSObject
         super.data = data;
     }
 
-    public SimpleJSObject(Object[] array)
+//    public SimpleJSObject(Object[] array)
+//    {
+//        super();
+//        super.array = new FlexibleLinkedList<>();
+//        for(Object i:array)
+//            super.array.add( new SimpleJSObject(i) );
+//    }
+    
+    public SimpleJSObject(JSObject array)
     {
         super();
         super.array = new FlexibleLinkedList<>();
-        for(Object i:array)
-            super.array.add( new SimpleJSObject(i) );
+        for( JSObject i : array )
+            super.array.add(i);
     }
 
     public SimpleJSObject(HashMap object)

@@ -21,15 +21,12 @@ public class Test
     }
     
     public static void main(String[] args)
-    {
-        SimpleJSObject obj = new SimpleJSObject(new String[]{"Pera","Mika"});
-        obj.set("name", "Nikola");
-        Iterator<Map.Entry<String, JSObject>> i = obj.objectIterator();
-        while( i.hasNext() )
-        {
-            Map.Entry<String, JSObject> next = i.next();
-            System.out.println( next.getValue().get() );
-        }
+    {   
+        HashMap<String, JSObject> map = new HashMap<>();
+        map.put("name", new SimpleJSObject("Nikola"));
+        map.put("lastname", new SimpleJSObject("Zelic"));
+        JSObject js = new SimpleJSObject(map);
+        System.out.println( js.type() );
     }
     
 } 
