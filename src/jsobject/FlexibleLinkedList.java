@@ -1,4 +1,4 @@
-package classes;
+package jsobject;
 
 import java.util.LinkedList;
 

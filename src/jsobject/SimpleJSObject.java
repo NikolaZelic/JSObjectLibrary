@@ -1,7 +1,7 @@
-package classes;
+package jsobject;
 
-import abstractions.AbstractJSObject;
-import abstractions.JSObject;
+import jsobject.AbstractJSObject;
+import jsobject.JSObject;
 import java.util.HashMap;
 
 

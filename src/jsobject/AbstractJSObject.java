@@ -1,25 +1,30 @@
-package abstractions;
+package jsobject;
 
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
+import jsobject.JSObjectType.*;
 
 abstract public class AbstractJSObject implements JSObject
 {
     protected Object data;
     protected List<JSObject> array;
-    protected Map<String, JSObject> object;
+    public Map<String, JSObject> object;
     
     @Override
-    public int type()
+    public JSObjectType type()
     {
         if( data!=null )
-            return JSObject.DATA;
+            return JSObjectType.Data;
         if( array!=null )
-            return JSObject.ARRAY;
-        else
-            return JSObject.OBJECT;
+            return JSObjectType.Array;
+        if( object!=null )
+            return JSObjectType.Object;
+        return JSObjectType.Undefined;
     }
 
     @Override
@@ -96,5 +101,40 @@ abstract public class AbstractJSObject implements JSObject
         object = null;
     }
     
+    //---------ITERATIONS----------------
+    @Override
+    public Iterator<JSObject> iterator()
+    {
+        switch ( type() )
+        {
+            case Array: return array.iterator(); 
+            case Object: return object.values().iterator();
+            default: return null;
+        }
+    }
+
+    @Override
+    public void forEach(Consumer<? super JSObject> action)
+    {
+        if( type()!=JSObjectType.Array )
+            return;
+        array.forEach(action);
+    }
     
+    @Override
+    public void forEach(BiConsumer<? super String, ? super JSObject> action)
+    {
+        if( type()!=JSObjectType.Object )
+            return;
+        object.forEach(action);
+    }
+
+    @Override
+    public Iterator<Map.Entry<String, JSObject>> objectIterator()
+    {
+        if( type() != JSObjectType.Object )
+            return null;
+        return object.entrySet().iterator();
+    }
+
 }

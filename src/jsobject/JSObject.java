@@ -1,13 +1,15 @@
-package abstractions;
+package jsobject;
+
+import java.util.Iterator;
+import java.util.Map;
+import java.util.function.BiConsumer;
 
 /**
  * @author Nikola
  */
-public interface JSObject
+public interface JSObject extends Iterable<JSObject>
 {
-    public static final int DATA = 0, ARRAY = 1, OBJECT = 2;
-    
-    public int type();
+    public JSObjectType type();
     
     public Object get();
     public Object get(int n);
@@ -23,4 +25,7 @@ public interface JSObject
     public void set(String key, JSObject data);
     
     public Integer length();
+    
+    public void forEach( BiConsumer<? super String, ? super JSObject> consumer );
+    public Iterator<Map.Entry<String, JSObject>> objectIterator();
 }

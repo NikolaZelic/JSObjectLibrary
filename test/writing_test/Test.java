@@ -1,10 +1,15 @@
 package writing_test;
 
-import classes.SimpleJSObject;
+import java.util.Collection;
+import jsobject.SimpleJSObject;
 import java.util.LinkedList;
 import java.util.List;
-import abstractions.JSObject;
+import jsobject.JSObject;
 import java.util.Deque;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import jsobject.JSObjectType;
 
 public class Test
 {
@@ -17,9 +22,14 @@ public class Test
     
     public static void main(String[] args)
     {
-//        Number a = new Test().<Number>convertTo();
-        Object a = new Test().convertTo();
-        System.out.println(a);
+        SimpleJSObject obj = new SimpleJSObject(new String[]{"Pera","Mika"});
+        obj.set("name", "Nikola");
+        Iterator<Map.Entry<String, JSObject>> i = obj.objectIterator();
+        while( i.hasNext() )
+        {
+            Map.Entry<String, JSObject> next = i.next();
+            System.out.println( next.getValue().get() );
+        }
     }
     
 } 
