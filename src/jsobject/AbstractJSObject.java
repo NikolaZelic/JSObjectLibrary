@@ -30,9 +30,13 @@ abstract public class AbstractJSObject implements JSObject
     @Override
     public Integer length()
     {
-        if( array==null )
-            return null;
-        return array.size();
+        if( array != null )
+            return array.size();
+        
+        if( object != null )
+            return object.size();
+        
+        return null;
     }
     
     @Override
@@ -107,7 +111,7 @@ abstract public class AbstractJSObject implements JSObject
     {
         switch ( type() )
         {
-            case Array: return array.iterator(); 
+            case Array: return array.iterator();
             case Object: return object.values().iterator();
             default: return null;
         }

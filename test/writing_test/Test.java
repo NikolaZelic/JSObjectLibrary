@@ -21,12 +21,11 @@ public class Test
     }
     
     public static void main(String[] args)
-    {   
-        HashMap<String, JSObject> map = new HashMap<>();
-        map.put("name", new SimpleJSObject("Nikola"));
-        map.put("lastname", new SimpleJSObject("Zelic"));
-        JSObject js = new SimpleJSObject(map);
-        System.out.println( js.type() );
+    {  
+        JSObject ob = new SimpleJSObject(null, null, null);
+        ob.set(0, new SimpleJSObject("Pera", null, null));
+        ob.set(1, new SimpleJSObject("Zika", null, null));
+        
     }
     
 } 

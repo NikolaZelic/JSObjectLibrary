@@ -3,6 +3,8 @@ package jsobject;
 import jsobject.AbstractJSObject;
 import jsobject.JSObject;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -10,33 +12,13 @@ import java.util.HashMap;
  */
 public class SimpleJSObject extends AbstractJSObject
 {
-    public SimpleJSObject(Object data)
+    public SimpleJSObject(Object data, List<JSObject> array, Map<String, JSObject> object)
     {
+        super();
         super.data = data;
-    }
-
-//    public SimpleJSObject(Object[] array)
-//    {
-//        super();
-//        super.array = new FlexibleLinkedList<>();
-//        for(Object i:array)
-//            super.array.add( new SimpleJSObject(i) );
-//    }
-    
-    public SimpleJSObject(JSObject array)
-    {
-        super();
-        super.array = new FlexibleLinkedList<>();
-        for( JSObject i : array )
-            super.array.add(i);
-    }
-
-    public SimpleJSObject(HashMap object)
-    {
-        super();
+        super.array = array;
         super.object = object;
     }
-    
     
     @Override
     public void set(int n, Object data)
@@ -46,7 +28,7 @@ public class SimpleJSObject extends AbstractJSObject
         
         super.data = null;
         object = null;
-        JSObject newOb = new SimpleJSObject(data);
+        JSObject newOb = new SimpleJSObject(data, null, null);
         
         if( array == null )
         {
@@ -87,7 +69,7 @@ public class SimpleJSObject extends AbstractJSObject
             super.array = null;
         }
         
-        object.put(key, new SimpleJSObject(data));
+        object.put(key, new SimpleJSObject(data, null, null));
     }
 
     @Override
