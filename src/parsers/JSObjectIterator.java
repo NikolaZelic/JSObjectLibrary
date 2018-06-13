@@ -17,7 +17,7 @@ public class JSObjectIterator
     {   
         if( js == null )
         {
-            action.visit(null, VisitState.SimpleElement);
+            action.visit(null, VisitState.SimpleElement, null); // Ovo proveriti zasto sam ovako stavio
             return;
         }
         
@@ -26,7 +26,7 @@ public class JSObjectIterator
         switch( js.type() )
         {
             case Array: 
-                action.visit(js, VisitState.ArrayStart );
+                action.visit(js, VisitState.ArrayStart, null );
                 
                 if( length > 0 )
                 {
@@ -36,40 +36,44 @@ public class JSObjectIterator
                     if( length == 1 )
                     {
                         if( next != null && next.type() == JSObjectType.Data )
-                            action.visit(next, VisitState.ArrayFirstAndLastElement);
+                            action.visit(next, VisitState.ArrayFirstAndLastElement, "0");
                         else
                             rek(next, null);
                     }
                     else
                     {   
                         if( next != null && next.type() == JSObjectType.Data )
-                            action.visit(next, VisitState.ArrayFirstElement);
+                            action.visit(next, VisitState.ArrayFirstElement, "0");
                         else
                             rek(next, null);
                         
+                        int rb = 1;
                         while( i.hasNext() )
                         {
                             next = i.next();
+                            String rbStr = String.valueOf(rb);
                             
                             if( next == null )
-                                action.visit(null, VisitState.ArrayElement);
+                                action.visit(null, VisitState.ArrayElement, rbStr);
                             else if( next.type() == JSObjectType.Data )
                             {
                                 if( i.hasNext() )
-                                    action.visit(next, VisitState.ArrayElement);
+                                    action.visit(next, VisitState.ArrayElement, rbStr);
                                 else
-                                    action.visit(next, VisitState.ArrayLastElement);
+                                    action.visit(next, VisitState.ArrayLastElement, rbStr);
                             }
                             else
                                 rek(next, null);
+                            
+                            rb++;
                         }
                     }
                 }
                 
-                action.visit(js, VisitState.ArrayEnd );
+                action.visit(js, VisitState.ArrayEnd, null );
                 return;
             case Object:
-                action.visit(js, VisitState.ObjectStart);
+                action.visit(js, VisitState.ObjectStart, null);
                 
                 if( length > 0 )
                 {
@@ -80,14 +84,14 @@ public class JSObjectIterator
                     if( length == 1 )
                     {
                         if( next != null && next.type() == JSObjectType.Data )
-                            action.visit(next, VisitState.ObjectFirstAndLastElement);
+                            action.visit(next, VisitState.ObjectFirstAndLastElement, nextObject.getKey());
                         else
                             rek(next, null);
                     }
                     else
                     {   
                         if( next != null && next.type() == JSObjectType.Data )
-                            action.visit(next, VisitState.ObjectFirstElement);
+                            action.visit(next, VisitState.ObjectFirstElement, nextObject.getKey());
                         else
                             rek(next, null);
                         
@@ -97,13 +101,13 @@ public class JSObjectIterator
                             next = nextObject.getValue();
                             
                             if( next == null )
-                                action.visit(null, VisitState.ArrayElement);
+                                action.visit(null, VisitState.ObjectElement, nextObject.getKey());
                             else if( next.type() == JSObjectType.Data )
                             {
                                 if( i.hasNext() )
-                                    action.visit(next, VisitState.ArrayElement);
+                                    action.visit(next, VisitState.ObjectElement, nextObject.getKey());
                                 else
-                                    action.visit(next, VisitState.ArrayLastElement);
+                                    action.visit(next, VisitState.ObjectLastElement, nextObject.getKey());
                             }
                             else
                                 rek(next, null);
@@ -111,10 +115,10 @@ public class JSObjectIterator
                     }
                 }
                 
-                action.visit(js, VisitState.ObjectEnd);
+                action.visit(js, VisitState.ObjectEnd, null);
                 return;
             case Data:
-                action.visit(js, VisitState.SimpleElement);
+                action.visit(js, VisitState.SimpleElement, null);
         }
     }
     

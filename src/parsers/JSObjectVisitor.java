@@ -8,5 +8,5 @@ import jsobject.JSObject;
  */
 public interface JSObjectVisitor<T extends JSObject>
 {
-    public void visit( T object, VisitState state );
+    public void visit( T object, VisitState state, String key );
 }

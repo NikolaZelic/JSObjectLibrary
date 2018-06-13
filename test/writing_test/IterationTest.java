@@ -19,6 +19,17 @@ public class IterationTest
 
     public static void main(String[] args)
     {   
+        // Test niza
+        //        ob.set(0, "Pera");
+        //        ob.set(1, "Mika");
+        //        ob.set(2, "Zika");
+        
+        // Test objekta
+        //        ob.set("name", "Pera");
+        //        ob.set("lastname", "Peric");
+        //        ob.set("godiste", 1992);
+        
+        // Test tabele
         HashMap<String, JSObject> map = new HashMap<>();
         map.put("name", new SimpleJSObject("Nikola", null, null));
         map.put("lastname", new SimpleJSObject("Zelic", null, null));
@@ -28,29 +39,38 @@ public class IterationTest
         map2.put("name", new SimpleJSObject("Miroslav", null, null));
         map2.put("lastname", new SimpleJSObject("Ilic", null, null));
         SimpleJSObject s2 = new SimpleJSObject(null, null, map2);
-        
+//        
         List<JSObject> array = new FlexibleLinkedList<>();
         array.add(s1);
         array.add( s2 );
         
+        JSObject ob = new SimpleJSObject( null, null, null );
         
-        JSObject ob = new SimpleJSObject( null, array, null );
+        // Tets duple dubine
+        ob.set("data", array);
         
-//        ob.set(0, null);
-//        ob.set(1, "Mika");
-//        ob.set(3,"Pera");
-        
-        JSObjectIterator.iterateJSObject(ob, (e, s)-> {
-//            switch( s )
-//            {
-//                case ArrayStart: System.out.println("["); break;
-//                case ArrayEnd: System.out.println("]"); break;
-//                case ArrayElement: System.out.println(e+", "); break;
-//                case ObjectStart: System.out.println("{"); break;
-//                case ObjectEnd: System.out.println("}"); break;
-//                case ObjectElement: System.out.println("OE: " + e);
-//            }
-            System.out.println( s );
+        StringBuilder bld = new StringBuilder();
+        JSObjectIterator.iterateJSObject(ob, (e, s, k)-> {
+            switch( s )
+            {
+                case ArrayStart: bld.append("["); break;
+                case ArrayEnd: bld.append("]"); break;
+                case ArrayElement: 
+                case ArrayFirstElement: 
+                    bld.append(e); bld.append(","); break;
+                case ArrayLastElement:
+                case ArrayFirstAndLastElement:
+                    bld.append(e); break;
+                case ObjectStart: bld.append("{"); break;
+                case ObjectEnd: bld.append("}"); break;
+                case ObjectElement:
+                case ObjectFirstElement:
+                    bld.append(k).append(":").append(e).append(","); break;
+                case ObjectLastElement:
+                case ObjectFirstAndLastElement:
+                         bld.append(k).append(":").append(e);
+            }
+            System.out.println( s + " " + k );
             if( e==null )
             {
                 System.out.println("\tnull");
@@ -59,7 +79,7 @@ public class IterationTest
             if( e.type() == JSObjectType.Data )
                 System.out.println("\t"+ e);
         });
-        
+        System.out.println(bld);
     }
     
 }
